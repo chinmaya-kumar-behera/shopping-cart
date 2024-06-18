@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ProductsHandler from "../../handler/ProductsHandler";
 import { CategoryButton } from "../../components";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setFilter } from "../../redux/product/productFilterSlice";
 
 const ProductFilters = () => {
     const { getProductsCategoriesHandler } = ProductsHandler();
     const dispatch = useDispatch();
-    
     const [categories, setCategories] = useState([]);
-
-    // const filter = useSelector((state) => state.filter.filter);
 
     const onButtonClick = (value) => {
         dispatch(setFilter(value));
@@ -19,7 +16,6 @@ const ProductFilters = () => {
     useEffect(() => {
       getProductsCategoriesHandler()
         .then((data) => {
-        //   console.log(data);
           setCategories(data.data.data);
         })
         .catch((err) => console.log(err));
