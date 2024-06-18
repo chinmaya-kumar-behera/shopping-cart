@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   filter: 'all',
+  categories: [],
 };
 
 const productFiterSlice = createSlice({
@@ -11,8 +12,11 @@ const productFiterSlice = createSlice({
     setFilter(state, action) {
       state.filter = action.payload;
     },
+    setCategories(state, action) {
+      state.categories = action.payload;
+    }
   },
 });
 
-export const { setFilter } = productFiterSlice.actions;
+export const { setFilter, setCategories } = productFiterSlice.actions;
 export default productFiterSlice.reducer;

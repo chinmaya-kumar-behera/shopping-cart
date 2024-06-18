@@ -1,4 +1,4 @@
-import { getProductsCategoriesService } from "../service/productServices";
+import { getProductsCategoriesService, getProductsService } from "../service/productServices";
 
 const ProductsHandler = () => {
   const getProductsCategoriesHandler = async () => {
@@ -8,7 +8,14 @@ const ProductsHandler = () => {
     }
   };
 
-  return { getProductsCategoriesHandler };
+  const getProductsHandler = async () => {
+    const result = await getProductsService();
+    if (result) {
+      return result;
+    }
+  };
+
+  return { getProductsCategoriesHandler, getProductsHandler };
 };
 
 export default ProductsHandler;
