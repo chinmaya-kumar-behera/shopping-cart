@@ -23,12 +23,14 @@ const ProductFilters = () => {
 
     return (
       <div className="flex items-center gap-2">
-        <CategoryButton text={'all'} onClick={() => onButtonClick('all')}>All</CategoryButton>
-        {categories.map((item, index) => (
-          <CategoryButton key={index} text={item} onClick={() => onButtonClick(item)}>
-            {item}
-          </CategoryButton>
-        ))}
+        {categories.length <= 0 ? "Loading... " : <React.Fragment>
+          <CategoryButton text={'all'} onClick={() => onButtonClick('all')}>All</CategoryButton>
+          {categories.map((item, index) => (
+            <CategoryButton key={index} text={item} onClick={() => onButtonClick(item)}>
+              {item}
+            </CategoryButton>
+          ))}
+        </React.Fragment>}
       </div>
     );
 };
