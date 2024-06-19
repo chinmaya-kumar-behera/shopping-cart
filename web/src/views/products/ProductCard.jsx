@@ -12,7 +12,7 @@ const ProductCard = ({ data }) => {
   
   return (
     <div
-      className={`w-full ${darkMode ? "bg-gray-800 bg-opacity-100" : "bg-gray-300"}  rounded-lg p-5 text-center`}
+      className={`w-full ${darkMode ? "bg-gray-800 bg-opacity-30" : "bg-gray-200"}  rounded-lg p-5 text-center`}
       onClick={btnHandler}
     >
       <div className="space-y-2 px-5">
