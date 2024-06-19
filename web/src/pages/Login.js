@@ -1,5 +1,4 @@
 import React from "react";
-import Loader from "../components/UI/Loader";
 import UserHandler from "../handler/UserHandler";
 import { useTheme } from "../hooks";
 
