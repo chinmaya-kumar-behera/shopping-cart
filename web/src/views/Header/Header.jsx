@@ -19,7 +19,7 @@ const Header = () => {
         <span className="text-2xl font-bold">Shopping Cart</span>
       </div>
 
-      <div className="flex gap-3 items-center text-lg">
+      <div className="flex gap-4 items-center text-lg font-normal">
         <a href="/">
           <button>Home</button>
         </a>
