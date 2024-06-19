@@ -1,10 +1,15 @@
+import { useSelector } from "react-redux";
 import {
+  addToCartService,
+  getCartByUserIdService,
   getProductDetailByIdService,
   getProductsCategoriesService,
   getProductsService,
 } from "../service/productServices";
 
 const ProductsHandler = () => {
+  // const user = useSelector((state) => state.auth.user);
+  
   const getProductsCategoriesHandler = async () => {
     const result = await getProductsCategoriesService();
     if (result) {
@@ -26,10 +31,26 @@ const ProductsHandler = () => {
     }
   };
 
+  const addToCartHandler = async (data) => {
+    const result = await addToCartService(data);
+    if (result) {
+      return result;
+    }
+  };
+
+    const getCartByUserIdHandler = async (data) => {
+      const result = await getCartByUserIdService(data);
+      if (result) {
+        return result;
+      }
+    };
+
   return {
     getProductsCategoriesHandler,
     getProductsHandler,
     getProductDetailByIdsHandler,
+    addToCartHandler,
+    getCartByUserIdHandler,
   };
 };
 
