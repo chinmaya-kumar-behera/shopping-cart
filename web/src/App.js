@@ -7,7 +7,6 @@ import Products from './pages/Products';
 import ProductDetail from './pages/ProductDetail';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
-import "./codeshare.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from './redux/auth/authSlice';
 import { Navigate } from "react-router-dom";
