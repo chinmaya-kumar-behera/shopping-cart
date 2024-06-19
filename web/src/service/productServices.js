@@ -14,3 +14,4 @@ export const getProductsService = () => {
 export const getProductDetailByIdService = (id) => {
   return axios.get(`${process.env.REACT_APP_API_BASE_URL}/products/${id}`);
 };
+

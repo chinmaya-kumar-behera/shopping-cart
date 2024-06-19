@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
+const { login, signUp } = require("../controllers/userController");
 
 router.get("/", (req, res) => {
   res.send("API is woking fine!");
@@ -33,7 +34,6 @@ router.get("/api/products", async (req, res) => {
 });
 
 router.get("/api/products/:id", async (req, res) => {
-  console.log('proct id controller called')
   const { id } = req.params;
   console.log(id);
 
@@ -45,9 +45,9 @@ router.get("/api/products/:id", async (req, res) => {
 });
 
 
-
-
-
+// authentication
+router.post("/api/login", login);
+router.post("/api/register", signUp);
 
 
 module.exports = router;

@@ -20,7 +20,6 @@ const ProductDetail = () => {
     }, [])
     
     const addToCartBtnHandler = () => {
-        console.log()
         toast.success("added to cart");
     }
 
