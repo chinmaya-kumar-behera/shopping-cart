@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ProductsHandler from "../handler/ProductsHandler";
-import { PageContainer } from "../components/index";
+import { FiMinus, FiPlus } from "react-icons/fi";
+
+import useTheme from "../hooks/useTheme";
 
 const CartCard = ({ item, updateCartItem, removeFromCart },) => {
   const { id, image, title, price, category, description, quantity } = item;
@@ -10,6 +12,10 @@ const CartCard = ({ item, updateCartItem, removeFromCart },) => {
     const newQuantity = quantity + change;
     updateCartItem(id, newQuantity);
   };
+
+
+  const { darkMode } = useTheme();
+  console.log(darkMode);
 
   return (
     <div className="flex items-center border-b border-gray-200 p-5">
@@ -22,19 +28,19 @@ const CartCard = ({ item, updateCartItem, removeFromCart },) => {
         <p className="text-sm text-gray-500">Category: {category}</p>
         <p className="text-sm text-gray-500">Price: ${price.toFixed(2)}</p>
         <div className="flex gap-10 items-center">
-          <div className="flex items-center mt-2">
+          <div className="flex items-center mt-2 gap-2">
             <button
-              className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full mr-2"
+              className="bg-gray-200 text-gray-700 p-1.5 rounded-full"
               onClick={() => handleQuantityChange(-1)}
             >
-              -
+              <FiMinus className="text-sm" />
             </button>
-            <span className="px-2 py-1 bg-gray-200 rounded">{quantity}</span>
+            <span className="text-2xl">{quantity}</span>
             <button
-              className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full ml-2"
+              className="bg-gray-200 text-gray-700 p-1.5 rounded-full"
               onClick={() => handleQuantityChange(1)}
             >
-              +
+              <FiPlus className="text-sm" />
             </button>
           </div>
           <button
@@ -105,13 +111,13 @@ const Cart = () => {
   };
 
   return (
-    <PageContainer>
+    <div className={'p-10'}>
       {cartData.length === 0 ? (
         <p className="text-gray-600">Your cart is empty.</p>
       ) : (
         <div className="mt-5">
-          <div className="flex gap-5">
-            <div className="">
+          <div className="flex gap-10">
+            <div className="space-y-3">
               <h2 className="text-2xl font-semibold mb-4">Your Cart</h2>
               {cartData.map((item) => (
                 <CartCard
@@ -121,24 +127,8 @@ const Cart = () => {
                   removeFromCart={removeFromCart}
                 />
               ))}
-              {cartData.map((item) => (
-                <CartCard
-                  key={item.id}
-                  item={item}
-                  updateCartItem={updateCartItem}
-                  removeFromCart={removeFromCart}
-                />
-              ))}
-              {cartData.map((item) => (
-                <CartCard
-                  key={item.id}
-                  item={item}
-                  updateCartItem={updateCartItem}
-                  removeFromCart={removeFromCart}
-                />
-              ))}
             </div>
-            <div className="w-1/3 sticky top-[200px]">
+            <div className="min-w-[250px]">
               <div className="min-h-[40vh] p-6 bg-gray-500 bg-opacity-20 rounded-lg shadow-md flex flex-col items-between justify-between">
                 <div className="">
                   <h3 className="text-2xl font-semibold mb-4 text-center">Checkout</h3>
@@ -154,7 +144,7 @@ const Cart = () => {
                     className="w-full bg-[#23c45e] hover:bg-[#53c47c] text-white px-4 py-2 rounded text-lg"
                     onClick={handlePlaceOrder}
                   >
-                    Place Order
+                    Check Out
                   </button>
                 </div>
               </div>
@@ -162,7 +152,7 @@ const Cart = () => {
           </div>
         </div>
       )}
-    </PageContainer>
+    </div>
   );
 };
 
