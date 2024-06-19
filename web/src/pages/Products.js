@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ProductsHandler from "../handler/ProductsHandler";
 import ProductContainer from "../views/products/ProductContainer";
+import { PageContainer } from "../components";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -13,11 +14,13 @@ const Products = () => {
       })
       .catch((err) => console.log(err));
   }, []);
-  return (
-    <div>
-      <ProductContainer products={products} />
-    </div>
-  );
+    return (
+      <PageContainer>
+        <div className="mt-10">
+          <ProductContainer products={products} />
+        </div>
+      </PageContainer>
+    );
 };
 
 export default Products;

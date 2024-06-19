@@ -6,8 +6,8 @@ import ProductsSection from "../views/products/ProductsSection";
 const Home = () => {
   return (
     <PageContainer>
-          <WelcomeContents />
-          <ProductsSection/>
+      <WelcomeContents />
+      <ProductsSection />
     </PageContainer>
   );
 };

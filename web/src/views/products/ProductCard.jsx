@@ -1,11 +1,19 @@
 import React from 'react'
 import { useTheme } from '../../hooks';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = ({ data }) => {
   const { darkMode } = useTheme();
+  const navigate = useNavigate()
+
+  const btnHandler = () => {
+    navigate(`/product/${data.id}`);
+  };
+  
   return (
     <div
       className={`w-full ${darkMode ? "bg-gray-800 bg-opacity-100" : "bg-gray-300"}  rounded-lg p-5 text-center`}
+      onClick={btnHandler}
     >
       <div className="space-y-2 px-5">
         <div className="flex justify-center">

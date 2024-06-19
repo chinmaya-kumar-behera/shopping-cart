@@ -6,15 +6,31 @@ const Header = () => {
   const { darkMode, toggleTheme } = useTheme();
 
   return (
-    <div className={`flex justify-between items-center px-5 py-6 border-2 ${darkMode ? 'border-gray-800' : 'border-gray-200'}`}>
+    <div
+      className={`flex justify-between items-center px-5 py-6 ${
+        darkMode ? "border-gray-800" : "border-2 border-gray-200"
+      }`}
+    >
       <div>
         <h2 className="text-xl font-bold">Shopping Cart</h2>
       </div>
       <div className="flex gap-3 items-center text-lg">
-        <a href="/"> <button>Home</button> </a>
-        <a href="/products"> <button>Products</button> </a>
-        <a href="/cart"> <button>Cart</button> </a>
-        <a href="/login"> <button>Login</button> </a>
+        <a href="/">
+          {" "}
+          <button>Home</button>{" "}
+        </a>
+        <a href="/products">
+          {" "}
+          <button>Products</button>{" "}
+        </a>
+        <a href="/cart">
+          {" "}
+          <button>Cart</button>{" "}
+        </a>
+        <a href="/login">
+          {" "}
+          <button>Login</button>{" "}
+        </a>
         <button>Logout</button>
       </div>
       <div>
