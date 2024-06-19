@@ -21,27 +21,29 @@ const CartCard = ({ item, updateCartItem, removeFromCart },) => {
         <p className="text-sm text-gray-500">{description}</p>
         <p className="text-sm text-gray-500">Category: {category}</p>
         <p className="text-sm text-gray-500">Price: ${price.toFixed(2)}</p>
-        <div className="flex items-center mt-2">
+        <div className="flex gap-10 items-center">
+          <div className="flex items-center mt-2">
+            <button
+              className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full mr-2"
+              onClick={() => handleQuantityChange(-1)}
+            >
+              -
+            </button>
+            <span className="px-2 py-1 bg-gray-200 rounded">{quantity}</span>
+            <button
+              className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full ml-2"
+              onClick={() => handleQuantityChange(1)}
+            >
+              +
+            </button>
+          </div>
           <button
-            className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full mr-2"
-            onClick={() => handleQuantityChange(-1)}
+            className="mt-2 text-white bg-red-500 hover:bg-red-400 px-5 p-2 rounded-md focus:outline-none transition-all duration-300"
+            onClick={() => removeFromCart(id)}
           >
-            -
-          </button>
-          <span className="px-2 py-1 bg-gray-200 rounded">{quantity}</span>
-          <button
-            className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full ml-2"
-            onClick={() => handleQuantityChange(1)}
-          >
-            +
+            Remove from Cart
           </button>
         </div>
-        <button
-          className="mt-2 text-sm text-red-600 hover:text-red-800 focus:outline-none"
-          onClick={() => removeFromCart(id)}
-        >
-          Remove from Cart
-        </button>
       </div>
     </div>
   );
@@ -91,12 +93,11 @@ const Cart = () => {
   };
 
   const removeFromCart = (productId) => {
-    // Implement logic to remove item from cart and update backend
-    console.log(`Removing product with id ${productId} from cart`);
-    removeCartItemHandler(productId);
-    const updatedCart = cartData.filter((item) => item.id !== productId);
-    setCartData(updatedCart);
-    calculateTotals(updatedCart);
+    // console.log(`Removing product with id ${productId} from cart`);
+    // removeCartItemHandler(productId);
+    // const updatedCart = cartData.filter((item) => item.id !== productId);
+    // setCartData(updatedCart);
+    // calculateTotals(updatedCart);
   }
   const handlePlaceOrder = () => {
     // Logic to handle placing order
@@ -105,33 +106,39 @@ const Cart = () => {
 
   return (
     <PageContainer>
-      <h2 className="text-2xl font-semibold mb-4">Your Cart</h2>
       {cartData.length === 0 ? (
         <p className="text-gray-600">Your cart is empty.</p>
       ) : (
-        <div className="flex gap-5">
-          <div className="">
-            {cartData.map((item) => (
-              <CartCard
-                key={item.id}
-                item={item}
-                updateCartItem={updateCartItem}
-                removeFromCart={removeFromCart}
-              />
-            ))}
-          </div>
-          <div className="min-w-[300px] mt-4 p-4 bg-gray-100 rounded-lg">
-            <h3 className="text-lg font-semibold mb-2">Checkout</h3>
-            <p className="text-sm text-gray-600">Total Items: {totalItems }</p>
-            <p className="text-sm text-gray-600">
-              Total Price: ${totalPrice.toFixed(2)} 
-            </p>
-            <button
-              className="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-              onClick={handlePlaceOrder}
-            >
-              Place Order
-            </button>
+        <div className="mt-5">
+          <div className="flex gap-5">
+            <div className="">
+              <h2 className="text-2xl font-semibold mb-4">Your Cart</h2>
+              {cartData.map((item) => (
+                <CartCard
+                  key={item.id}
+                  item={item}
+                  updateCartItem={updateCartItem}
+                  removeFromCart={removeFromCart}
+                />
+              ))}
+            </div>
+            <div className="w-1/3">
+              <div className=" p-6 bg-gray-500 bg-opacity-20 rounded-lg shadow-md">
+                <h3 className="text-2xl font-semibold mb-4">Checkout</h3>
+                <div className="mb-4">
+                  <p className="text-lg ">Total Items: {totalItems}</p>
+                  <p className="text-lg ">
+                    Total Price: ${totalPrice.toFixed(2)}
+                  </p>
+                </div>
+                <button
+                  className="w-full bg-[#23c45e] hover:bg-[#53c47c] text-white px-4 py-2 rounded text-lg"
+                  onClick={handlePlaceOrder}
+                >
+                  Place Order
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
