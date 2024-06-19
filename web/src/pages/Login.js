@@ -26,7 +26,7 @@ const Login = () => {
               required
               value={loginData.email}
               onChange={onLoginChange}
-              className="bg-gray-100 p-3 rounded"
+              className={`bg-gray-100 p-3 rounded ${darkMode && "text-black"}`}
               placeholder="Enter Your Email"
             />
           </div>
@@ -39,7 +39,7 @@ const Login = () => {
               required
               value={loginData.password}
               onChange={onLoginChange}
-              className="bg-gray-100 p-3 rounded"
+              className={`bg-gray-100 p-3 rounded ${darkMode && "text-black"}`}
               placeholder="Enter Your Password"
             />
           </div>

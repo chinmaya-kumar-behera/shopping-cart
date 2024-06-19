@@ -25,7 +25,7 @@ const SignUp = () => {
               required
               value={signUpData.name}
               onChange={onSignupChange}
-              className="bg-gray-100 p-3 rounded"
+              className={`bg-gray-100 p-3 rounded ${darkMode && "text-black"}`}
               placeholder="Enter Your Full Name"
             />
           </div>
@@ -37,7 +37,7 @@ const SignUp = () => {
               required
               value={signUpData.email}
               onChange={onSignupChange}
-              className="bg-gray-100 p-3 rounded"
+              className={`bg-gray-100 p-3 rounded ${darkMode && "text-black"}`}
               placeholder="Enter Your Email"
             />
           </div>
@@ -49,7 +49,7 @@ const SignUp = () => {
               required
               value={signUpData.password}
               onChange={onSignupChange}
-              className="bg-gray-100 p-3 rounded"
+              className={`bg-gray-100 p-3 rounded ${darkMode && "text-black"}`}
               placeholder="Enter Your Password"
             />
           </div>
