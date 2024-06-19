@@ -121,22 +121,42 @@ const Cart = () => {
                   removeFromCart={removeFromCart}
                 />
               ))}
+              {cartData.map((item) => (
+                <CartCard
+                  key={item.id}
+                  item={item}
+                  updateCartItem={updateCartItem}
+                  removeFromCart={removeFromCart}
+                />
+              ))}
+              {cartData.map((item) => (
+                <CartCard
+                  key={item.id}
+                  item={item}
+                  updateCartItem={updateCartItem}
+                  removeFromCart={removeFromCart}
+                />
+              ))}
             </div>
-            <div className="w-1/3">
-              <div className=" p-6 bg-gray-500 bg-opacity-20 rounded-lg shadow-md">
-                <h3 className="text-2xl font-semibold mb-4">Checkout</h3>
-                <div className="mb-4">
-                  <p className="text-lg ">Total Items: {totalItems}</p>
-                  <p className="text-lg ">
-                    Total Price: ${totalPrice.toFixed(2)}
-                  </p>
+            <div className="w-1/3 sticky top-[200px]">
+              <div className="min-h-[40vh] p-6 bg-gray-500 bg-opacity-20 rounded-lg shadow-md flex flex-col items-between justify-between">
+                <div className="">
+                  <h3 className="text-2xl font-semibold mb-4 text-center">Checkout</h3>
                 </div>
-                <button
-                  className="w-full bg-[#23c45e] hover:bg-[#53c47c] text-white px-4 py-2 rounded text-lg"
-                  onClick={handlePlaceOrder}
-                >
-                  Place Order
-                </button>
+                <div className="">
+                  <div className="mb-4">
+                    <p className="text-lg ">Total Items: {totalItems}</p>
+                    <p className="text-lg ">
+                      Total Price: ${totalPrice.toFixed(2)}
+                    </p>
+                  </div>
+                  <button
+                    className="w-full bg-[#23c45e] hover:bg-[#53c47c] text-white px-4 py-2 rounded text-lg"
+                    onClick={handlePlaceOrder}
+                  >
+                    Place Order
+                  </button>
+                </div>
               </div>
             </div>
           </div>
