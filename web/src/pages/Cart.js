@@ -57,14 +57,15 @@ const Cart = () => {
   const [cartData, setCartData] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
-
   const [transactionModal, setTransactionModal] = useState(false);
+
+  const [cartId, setCartId] = useState(null);
 
   useEffect(() => {
     if (user?._id) {
       getCartByUserIdHandler({ userId: user._id })
         .then((res) => {
-          console.log(res.data.data);
+          setCartId(res.data._id);
           setCartData(res.data.data);
           calculateTotals(res.data.data);
         })
@@ -151,8 +152,9 @@ const Cart = () => {
         <TransactionModal
           modalState={transactionModal}
           onClose={() => setTransactionModal(false)}
-          products={totalItems}
+          products={cartData}
           amount={totalPrice}
+          cartId={cartId}
         />
       )}
     </div>

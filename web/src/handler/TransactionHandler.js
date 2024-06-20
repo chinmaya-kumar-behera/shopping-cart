@@ -5,9 +5,9 @@ const TransactionHandler = () => {
     return initiateTransactionService(data);
   };
 
-  const confirmTransactionHandler = async (transactionId, status) => {
+  const confirmTransactionHandler = async (data) => {
     try {
-      const res = await confirmTransactionService(transactionId, status);
+      const res = await confirmTransactionService(data);
       if (res.status === 200) {
         return res.data;
       }

@@ -98,6 +98,7 @@ const getCart = async (req, res) => {
     const productsIds = cartResult.cart.map((item) => item.productId);
 
     let cartData = productsData.filter((item) => productsIds.includes(item.id));
+    const { _id } = cartResult;
 
     let newResult = [];
     for (let i = 0; i < cartData.length; i++) {
@@ -106,7 +107,7 @@ const getCart = async (req, res) => {
 
     return res
       .status(200)
-      .json({ message: "Fetched successfully", data: newResult });
+      .json({ message: "Fetched successfully", data: newResult ,_id});
   } catch (err) {
     console.log(err);
   }

@@ -1,6 +1,8 @@
 const Transaction = require("../models/transactionModel");
 const Razorpay = require("razorpay");
 const request = require('request');
+const orderModel = require("../models/orderModel");
+const cartModel = require("../models/cartModel");
 
 const createTransaction = async (transByUserId, amount,) => {
   try {
@@ -81,7 +83,6 @@ const createRazorpayOrder = async (req, res) => {
 };
 
 const captureRazorpayPayment = async (req, res) => {
-  console.log('captureRazorPayPayment controller called')
   const { paymentId, amount, receiptId } = req.body;
 
   try {
@@ -118,17 +119,13 @@ const captureRazorpayPayment = async (req, res) => {
 };
 
 const confirmTransactionAPI = async (req, res) => {
-  const { transactionId, status } = req.body;
-  console.log(req.body);
-
-  console.log("confirmTransaction API called!");
-
+  const { transactionId, status, products, cartId } = req.body;
   try {
     if (!transactionId || (status !== "SUCCESS" && status !== "FAILED")) {
       throw new Error("Invalid transactionId or status");
     }
 
-    const updatedTransaction = await confirmTransaction(transactionId, status);
+    const updatedTransaction = await confirmTransaction(transactionId, status, products, cartId);
 
     res.status(200).json({ success: true, transaction: updatedTransaction });
   } catch (error) {
@@ -136,22 +133,19 @@ const confirmTransactionAPI = async (req, res) => {
   }
 };
 
-const confirmTransaction = async (transactionId, status) => {
+const confirmTransaction = async (transactionId, status, products, cartId) => {
+  console.log("Confirm transaction !");
   try {
     const transaction = await Transaction.findById(transactionId);
-    console.log(transaction);
 
     if (!transaction) {
       throw new Error("Transaction not found");
     }
-    // const appointment = await appointmentModel.findById(transaction.transForAppointment);
-    // appointment.paymentStatus = status;
-    // if (appointment.payments && appointment.payments.length >= 1) {
-    //   appointment.payments.push(transactionId);
-    // } else {
-    //   appointment.payments = [transactionId];
-    // }
-    // await appointment.save();
+
+    const userId = transaction.transByUserId;
+    const orderDetail = await orderModel.create({ transactionId, userId, products });
+
+    await cartModel.findByIdAndDelete(cartId);
 
     transaction.transStatus = status;
     transaction.transEndTime = new Date();
