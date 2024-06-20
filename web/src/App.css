@@ -1,38 +1,50 @@
-.App {
-  text-align: center;
+/* dialog css */
+
+                        /* dialog css */
+
+ .dialog {
+    outline: none;
+    @apply absolute min-h-full min-w-full flex justify-center items-center ;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@screen sm {
+    .dialog {
+        @apply max-w-xl;
+    }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+@screen md {
+    .dialog {
+        @apply max-w-2xl;
+    }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@screen lg {
+    .dialog {
+        @apply max-w-4xl;
+    }
 }
 
-.App-link {
-  color: #61dafb;
+@screen xl {
+    .dialog {
+        @apply max-w-6xl;
+    }
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.dialog-content {
+    @apply shadow-xl relative h-full;
 }
+
+.dialog-overlay {
+    transition: all 0.15s ease-in-out;
+    @apply inset-0 fixed z-30 ;
+}
+
+.dialog-overlay-after-open {
+    opacity: 1;
+}
+
+.dialog-overlay-before-close {
+    opacity: 0;
+}
+

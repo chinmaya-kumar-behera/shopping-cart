@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import ProductsHandler from "../handler/ProductsHandler";
 import { FiMinus, FiPlus } from "react-icons/fi";
 
-import useTheme from "../hooks/useTheme";
+import TransactionModal from "../views/payment/TransactionModal";
 
 const CartCard = ({ item, updateCartItem, removeFromCart },) => {
   const { id, image, title, price, category, description, quantity } = item;
@@ -12,10 +12,6 @@ const CartCard = ({ item, updateCartItem, removeFromCart },) => {
     const newQuantity = quantity + change;
     updateCartItem(id, newQuantity);
   };
-
-
-  const { darkMode } = useTheme();
-  console.log(darkMode);
 
   return (
     <div className="flex items-center border-b border-gray-200 p-5">
@@ -62,6 +58,8 @@ const Cart = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
+  const [transactionModal, setTransactionModal] = useState(false);
+
   useEffect(() => {
     if (user?._id) {
       getCartByUserIdHandler({ userId: user._id })
@@ -79,12 +77,10 @@ const Cart = () => {
       (total, item) => total + item.quantity,
       0
     );
-
     const itemsPrice = cartItems.reduce(
       (total, item) => total + item.price * item.quantity,
       0
     );
-    console.log(itemsCount, itemsPrice);
     setTotalItems(itemsCount);
     setTotalPrice(itemsPrice);
   };
@@ -105,13 +101,9 @@ const Cart = () => {
     // setCartData(updatedCart);
     // calculateTotals(updatedCart);
   }
-  const handlePlaceOrder = () => {
-    // Logic to handle placing order
-    console.log("Placing order...");
-  };
 
   return (
-    <div className={'p-10'}>
+    <div className={"p-10"}>
       {cartData.length === 0 ? (
         <p className="text-gray-600">Your cart is empty.</p>
       ) : (
@@ -131,7 +123,9 @@ const Cart = () => {
             <div className="min-w-[250px]">
               <div className="min-h-[40vh] p-6 bg-gray-500 bg-opacity-20 rounded-lg shadow-md flex flex-col items-between justify-between">
                 <div className="">
-                  <h3 className="text-2xl font-semibold mb-4 text-center">Checkout</h3>
+                  <h3 className="text-2xl font-semibold mb-4 text-center">
+                    Checkout
+                  </h3>
                 </div>
                 <div className="">
                   <div className="mb-4">
@@ -142,7 +136,7 @@ const Cart = () => {
                   </div>
                   <button
                     className="w-full bg-[#23c45e] hover:bg-[#53c47c] text-white px-4 py-2 rounded text-lg"
-                    onClick={handlePlaceOrder}
+                    onClick={() => setTransactionModal(true)}
                   >
                     Check Out
                   </button>
@@ -151,6 +145,15 @@ const Cart = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {transactionModal && (
+        <TransactionModal
+          modalState={transactionModal}
+          onClose={() => setTransactionModal(false)}
+          products={totalItems}
+          amount={totalPrice}
+        />
       )}
     </div>
   );
