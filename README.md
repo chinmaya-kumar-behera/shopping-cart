@@ -22,6 +22,10 @@ Developed a comprehensive shopping cart eCommerce website that showcases product
 - Users can view their past orders and order details.
 - Order history includes product details, order status, and payment information.
 
+### Dark and Light Mode
+- Implemented dark and light mode for better user experience.
+- Users can switch between modes based on their preference.
+
 ## Technologies Used
 
 - **Frontend:** React.js, Tailwind CSS, Redux
@@ -31,15 +35,14 @@ Developed a comprehensive shopping cart eCommerce website that showcases product
 
 ## Screenshots
 
-![Home Page](path/to/homepage_screenshot.png)
-![Product Category](path/to/product_category_screenshot.png)
-![Shopping Cart](path/to/shopping_cart_screenshot.png)
-![Checkout Page](path/to/checkout_page_screenshot.png)
-![Order History](path/to/order_history_screenshot.png)
+![image](https://github.com/chinmaya-kumar-behera/shopping-cart/assets/101429530/3fa6591d-7de5-47ad-bf43-e4050a563696)
+![image](https://github.com/chinmaya-kumar-behera/shopping-cart/assets/101429530/22c54940-2384-4a24-99fe-ec16e0e23f45)
+![image](https://github.com/chinmaya-kumar-behera/shopping-cart/assets/101429530/d59ca293-b2bf-4cdd-b643-747ba69aacda)
+![image](https://github.com/chinmaya-kumar-behera/shopping-cart/assets/101429530/29c4cd21-6e2d-4eae-a48b-d12d2d97934c)
 
 ## Visit the Site
 
-Explore the eCommerce website at [ecommerce-site-url](https://your-ecommerce-site-url.com).
+Explore the eCommerce website at [ecommerce-site-url](https://chinmaya-shoppingcart.vercel.app/).
 
 ## Installation
 
@@ -60,8 +63,6 @@ Explore the eCommerce website at [ecommerce-site-url](https://your-ecommerce-sit
     MONGO_URI=your_mongo_db_uri
     BASE_URL="http://localhost:5000"
     NODE_ENV="development"
-    NODEMAILER_MAIL="your_nodemailer_email"
-    NODEMAILER_PASSWORD='your_nodemailer_password'
     RAZOR_PAY_KEY_ID="your_razorpay_key_id"
     RAZOR_PAY_KEY_SECRET="your_razorpay_key_secret"
     ```
@@ -70,8 +71,6 @@ Explore the eCommerce website at [ecommerce-site-url](https://your-ecommerce-sit
     ```env
     REACT_APP_API_BASE_URL="http://localhost:5000"
     REACT_APP_API_NODE_ENV="development"
-    REACT_APP_API_GOOGLE_OAUTH_CLIENT_ID='your_google_oauth_client_id'
-    REACT_APP_API_CLIENT_SECRET="your_google_oauth_client_secret"
     REACT_APP_PUBLIC_RAZOR_PAY_KEY_ID="your_public_razorpay_key_id"
     ```
 
@@ -81,6 +80,7 @@ Explore the eCommerce website at [ecommerce-site-url](https://your-ecommerce-sit
     ```sh
     npm run dev
     ```
+
 ---
 
 Developed by [Chinmaya Kumar Behera](https://github.com/chinmaya-kumar-behera)
