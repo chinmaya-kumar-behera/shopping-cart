@@ -3,6 +3,8 @@ import ProductsHandler from "../handler/ProductsHandler";
 import { useSelector } from "react-redux";
 import moment from "moment";
 
+
+
 const Order = () => {
   const user = useSelector((state) => state.auth.user);
   const { getOrdersByUserIdHandler } = ProductsHandler();
@@ -40,7 +42,7 @@ const Order = () => {
               <p className="text-gray-600">You don't have any orders yet.</p>
               <p className="text-gray-600">
                 Please go to the{" "}
-                <a href="/shop" className="text-blue-600">
+                <a href="/products" className="text-blue-600">
                   order section
                 </a>{" "}
                 and shop something.
