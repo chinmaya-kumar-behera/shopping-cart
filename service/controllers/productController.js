@@ -2,6 +2,7 @@
 const axios = require("axios");
 const Users = require("../models/userModel");
 const cartModel = require("../models/cartModel");
+const orderModel = require("../models/orderModel");
 
 const getProductCategories = async (req, res) => {
   const categoryUrl = "https://fakestoreapi.com/products/categories";
@@ -73,10 +74,8 @@ const addToCart = async (req, res) => {
 };
 
 const getCart = async (req, res) => {
-  console.log("cart get controller !");
   try {
     const { userId } = req.params;
-    console.log(userId);
 
     const userExist = await Users.findById(userId);
     if (!userExist) {
@@ -113,6 +112,24 @@ const getCart = async (req, res) => {
   }
 };
 
+const getOrders = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+  const userExist = await Users.findById(userId);
+  if (!userExist) {
+    return res.status(400).json({ message: "User not found!" });
+    }
+    
+    const result = await orderModel.find({ userId });
+
+    res.status(200).json({ message: "Fetched data", data: result });
+
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 
 module.exports = {
   getProductById,
@@ -120,4 +137,5 @@ module.exports = {
   getProductCategories,
   addToCart,
   getCart,
+  getOrders,
 };
