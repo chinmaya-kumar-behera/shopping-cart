@@ -2,6 +2,7 @@
 const axios = require("axios");
 const Users = require("../models/userModel");
 const cartModel = require("../models/cartModel");
+const orderModel = require("../models/orderModel");
 
 const getProductCategories = async (req, res) => {
   const categoryUrl = "https://fakestoreapi.com/products/categories";
@@ -73,10 +74,8 @@ const addToCart = async (req, res) => {
 };
 
 const getCart = async (req, res) => {
-  console.log("cart get controller !");
   try {
     const { userId } = req.params;
-    console.log(userId);
 
     const userExist = await Users.findById(userId);
     if (!userExist) {
@@ -98,6 +97,7 @@ const getCart = async (req, res) => {
     const productsIds = cartResult.cart.map((item) => item.productId);
 
     let cartData = productsData.filter((item) => productsIds.includes(item.id));
+    const { _id } = cartResult;
 
     let newResult = [];
     for (let i = 0; i < cartData.length; i++) {
@@ -106,11 +106,29 @@ const getCart = async (req, res) => {
 
     return res
       .status(200)
-      .json({ message: "Fetched successfully", data: newResult });
+      .json({ message: "Fetched successfully", data: newResult ,_id});
   } catch (err) {
     console.log(err);
   }
 };
+
+const getOrders = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+  const userExist = await Users.findById(userId);
+  if (!userExist) {
+    return res.status(400).json({ message: "User not found!" });
+    }
+    
+    const result = await orderModel.find({ userId });
+
+    res.status(200).json({ message: "Fetched data", data: result });
+
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 
 module.exports = {
@@ -119,4 +137,5 @@ module.exports = {
   getProductCategories,
   addToCart,
   getCart,
+  getOrders,
 };

@@ -1,6 +1,7 @@
 import {
   addToCartService,
   getCartByUserIdService,
+  getOrdersByUserIdService,
   getProductDetailByIdService,
   getProductsCategoriesService,
   getProductsService,
@@ -42,7 +43,14 @@ const ProductsHandler = () => {
       if (result) {
         return result;
       }
-    };
+  };
+  
+      const getOrdersByUserIdHandler = async (data) => {
+        const result = await getOrdersByUserIdService(data);
+        if (result) {
+          return result;
+        }
+      };
 
   return {
     getProductsCategoriesHandler,
@@ -50,6 +58,7 @@ const ProductsHandler = () => {
     getProductDetailByIdsHandler,
     addToCartHandler,
     getCartByUserIdHandler,
+    getOrdersByUserIdHandler,
   };
 };
 

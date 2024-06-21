@@ -1,9 +1,7 @@
 import axios from 'axios';
 
 export const getProductsCategoriesService = () => {
-    return axios.get(
-      `${process.env.REACT_APP_API_BASE_URL}/products/categories`
-    );
+    return axios.get(`${process.env.REACT_APP_API_BASE_URL}/products/categories`);
 }
 
 export const getProductsService = () => {
@@ -20,5 +18,9 @@ export const addToCartService = (data) => {
 
 export const getCartByUserIdService = ({ userId }) => {
   return axios.get(`${process.env.REACT_APP_API_BASE_URL}/cart/${userId}`,);
+};
+
+export const getOrdersByUserIdService = ({ userId }) => {
+  return axios.get(`${process.env.REACT_APP_API_BASE_URL}/orders/${userId}`);
 };
 
