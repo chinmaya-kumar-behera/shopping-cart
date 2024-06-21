@@ -1,14 +1,21 @@
 const mongoose = require('mongoose');
 
-const orderSchema = mongoose.Schema({
-  userId: mongoose.Schema.Types.ObjectId,
-  products: [
-    {
-      id: { type: Number },
-      quantity: { type: Number },
+const orderSchema = mongoose.Schema(
+  {
+    userId: mongoose.Schema.Types.ObjectId,
+    products: [
+      {
+        productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+        quantity: { type: Number },
+      },
+    ],
+    transactionId: mongoose.Schema.Types.ObjectId,
+    status: {
+      type: String,
+      enum: ["success", "failed"],
     },
-  ],
-  transactionId: mongoose.Schema.Types.ObjectId,
-});
+  },
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("Orders", orderSchema);

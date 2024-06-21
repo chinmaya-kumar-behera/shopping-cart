@@ -134,7 +134,6 @@ const confirmTransactionAPI = async (req, res) => {
 };
 
 const confirmTransaction = async (transactionId, status, products, cartId) => {
-  console.log("Confirm transaction !");
   try {
     const transaction = await Transaction.findById(transactionId);
 
@@ -143,7 +142,8 @@ const confirmTransaction = async (transactionId, status, products, cartId) => {
     }
 
     const userId = transaction.transByUserId;
-    const orderDetail = await orderModel.create({ transactionId, userId, products });
+    const status = 'success';
+    const orderDetail = await orderModel.create({ transactionId, userId, products, status });
 
     await cartModel.findByIdAndDelete(cartId);
 

@@ -29,6 +29,9 @@ const Header = () => {
         <a href="/cart">
           <button>Cart</button>
         </a>
+        <a href="/orders">
+          <button>Orders</button>
+        </a>
         {user?._id ? (
           <button
             onClick={logoutHandler}
