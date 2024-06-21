@@ -3,10 +3,28 @@ const axios = require("axios");
 const Users = require("../models/userModel");
 const cartModel = require("../models/cartModel");
 const orderModel = require("../models/orderModel");
+const productCategoryModel = require("../models/productCategoryModel");
+const productModel = require("../models/productModel");
+
+
+const addItemsToCategoryCollection = () => {
+  const categories = ["electronics", "jewelery", "men's clothing", "women's clothing"]
+  categories.forEach(async (name) => await productCategoryModel.create({name}));
+}
+const addItemsToProductsCollection = () => {
+  const productsData = require("../json/Products.json");
+  productsData.forEach(async (item) => {
+    await productModel.create(item)
+  });
+}
+// addItemsToCategoryCollection();
+// addItemsToProductsCollection();
+
 
 const getProductCategories = async (req, res) => {
   const categoryUrl = "https://fakestoreapi.com/products/categories";
   const result = await axios.get(categoryUrl);
+  
   if (result) {
     res.json({ data: await result.data, message: "From fakestoreapi" });
   } else {
@@ -18,26 +36,24 @@ const getProductCategories = async (req, res) => {
 };
 
 const getProducts = async (req, res) => {
-  const url = "https://fakestoreapi.com/products";
-  const result = await axios.get(url);
-  if (result) {
-    res.json({ data: await result.data, message: "From fakestoreapi" });
-  } else {
-    res.json({
-      data: require("../json/Products.json"),
-      message: "From json data",
-    });
-  }
+  const result = await productModel.find();
+
+  res.json({
+    data: result,
+    message: "From MONGO collections",
+  });
 };
 
 
 const getProductById = async (req, res) => {
   const { id } = req.params;
+  const result = await productModel.findById(id);
 
-  const categoryUrl = `https://fakestoreapi.com/products/${id}`;
-  const result = await axios.get(categoryUrl);
+  if (!result) {
+    return res.status(400).json({ message: "product not found" });
+  }
   if (result) {
-    res.json({ data: await result.data, message: "From fakestoreapi" });
+    res.json({ data: await result, message: "From Mongodb" });
   }
 }
 
@@ -51,6 +67,7 @@ const addToCart = async (req, res) => {
     }
 
     let cartResult = await cartModel.findOne({ userId });
+
     if (cartResult) {
       const isProductExist = cartResult.cart.find(
         (item) => item.productId == cart.productId
@@ -82,31 +99,11 @@ const getCart = async (req, res) => {
       return res.status(400).json({ message: "User not found!" });
     }
 
-    let productsData = [];
-
-    const url = "https://fakestoreapi.com/products";
-    const result = await axios.get(url);
-
-    if (result) {
-      productsData = result.data;
-    } else {
-      productsData = require("../json/Products.json");
-    }
-
-    let cartResult = await cartModel.findOne({ userId });
-    const productsIds = cartResult.cart.map((item) => item.productId);
-
-    let cartData = productsData.filter((item) => productsIds.includes(item.id));
-    const { _id } = cartResult;
-
-    let newResult = [];
-    for (let i = 0; i < cartData.length; i++) {
-      newResult.push({ ...cartData[i], quantity: cartResult.cart[i].quantity });
-    }
+    let result = await cartModel.findOne({ userId }).populate('cart.productId');
 
     return res
       .status(200)
-      .json({ message: "Fetched successfully", data: newResult ,_id});
+      .json({ message: "Fetched successfully", data: result});
   } catch (err) {
     console.log(err);
   }
@@ -114,14 +111,19 @@ const getCart = async (req, res) => {
 
 const getOrders = async (req, res) => {
   try {
-    const { userId } = req.body;
-
-  const userExist = await Users.findById(userId);
-  if (!userExist) {
-    return res.status(400).json({ message: "User not found!" });
+    const { userId } = req.params;
+    if (!userId) {
+      return res.status(400).json({ message: "userId not found" });
     }
-    
-    const result = await orderModel.find({ userId });
+
+    const userExist = await Users.findById(userId);
+    if (!userExist) {
+      return res.status(400).json({ message: "User not found!" });
+    }
+
+    const result = await orderModel
+      .find({ userId })
+      .populate("products.productId");
 
     res.status(200).json({ message: "Fetched data", data: result });
 

@@ -29,7 +29,7 @@ const ProductDetail = () => {
     } else
       addToCartHandler({
         userId: user?._id,
-        cart: { productId: product.id, quantity: 1 },
+        cart: { productId: product._id, quantity: 1 },
       })
         .then((res) => {
           console.log(res);

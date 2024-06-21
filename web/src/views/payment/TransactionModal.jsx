@@ -32,7 +32,7 @@ const TransactionModal = ({ modalState, onClose, amount, products , cartId }) =>
             .post(url, { paymentId, amount, receiptId })
             .then(() => {
               console.log("Transaction successful!");
-              const productIds = products.map(item => { return { id: item.id, quantity: item.quantity } })
+              const productIds = products.map(item => { return { productId: item.productId._id, quantity: item.quantity } })
               confirmTransactionHandler({ transactionId: receiptId, status: "SUCCESS", products: productIds, cartId})
                 .then((res) => {
                   console.log(res);
@@ -104,7 +104,7 @@ const TransactionModal = ({ modalState, onClose, amount, products , cartId }) =>
         </h2>
 
         <div className="space-y-2">
-          {products.map((product,index) => (
+          {products.map(({ productId, quantity }, index) => (
             <div
               key={index}
               className={`flex gap-4 ${
@@ -114,16 +114,19 @@ const TransactionModal = ({ modalState, onClose, amount, products , cartId }) =>
               <div className="w-10">
                 <img
                   className="w-full"
-                  src={product.image}
-                  alt={product.title}
+                  src={productId.image}
+                  alt={productId.title}
                 />
               </div>
               <div className="w-full">
-                <h3 className="text-sm font-semibold">{product.title}</h3>
-                <div className="flex justify-end">
-                  <div className="">
+                <h3 className="text-sm font-semibold">{productId.title}</h3>
+                <div className="w-full">
+                  <div className="flex justify-between items-center">
+                    <p className="text-xs">
+                      Quantity : <strong>{quantity}</strong>
+                    </p>
                     <h4>
-                      Price <strong>${product.price}</strong>
+                      Price <strong>${productId.price}</strong>
                     </h4>
                   </div>
                 </div>

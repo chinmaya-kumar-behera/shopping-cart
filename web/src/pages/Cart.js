@@ -22,7 +22,7 @@ const CartCard = ({ item, updateCartItem, removeFromCart },) => {
         <h3 className="font-semibold text-lg">{title}</h3>
         <p className="text-sm text-gray-500">{description}</p>
         <p className="text-sm text-gray-500">Category: {category}</p>
-        <p className="text-sm text-gray-500">Price: ${price.toFixed(2)}</p>
+        <p className="text-sm text-gray-500">Price: ${price}</p>
         <div className="flex gap-10 items-center">
           <div className="flex items-center mt-2 gap-2">
             <button
@@ -65,9 +65,12 @@ const Cart = () => {
     if (user?._id) {
       getCartByUserIdHandler({ userId: user._id })
         .then((res) => {
-          setCartId(res.data._id);
-          setCartData(res.data.data);
-          calculateTotals(res.data.data);
+          if (Boolean(res.data.data)) { 
+            console.log("if block executed")
+            setCartId(res.data.data._id);
+            setCartData(res.data.data.cart);
+            calculateTotals(res.data.data.cart);
+          }
         })
         .catch((err) => console.log(err));
     }
@@ -79,7 +82,7 @@ const Cart = () => {
       0
     );
     const itemsPrice = cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
+      (total, item) => total + item.productId.price * item.quantity,
       0
     );
     setTotalItems(itemsCount);
@@ -114,8 +117,8 @@ const Cart = () => {
               <h2 className="text-2xl font-semibold mb-4">Your Cart</h2>
               {cartData.map((item) => (
                 <CartCard
-                  key={item.id}
-                  item={item}
+                  key={item._id}
+                  item={item.productId}
                   updateCartItem={updateCartItem}
                   removeFromCart={removeFromCart}
                 />

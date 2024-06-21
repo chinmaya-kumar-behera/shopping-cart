@@ -13,7 +13,7 @@ const ProductsSection = () => {
   useEffect(() => {
     getProductsHandler()
       .then((res) => {
-        // console.log(res.data.data);
+        // console.log(res.data.data); 
         setProducts(res.data.data);
       })
       .catch((err) => console.log(err));

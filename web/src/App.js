@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from './redux/auth/authSlice';
 import { Navigate } from "react-router-dom";
 import Cart from './pages/Cart';
+import Order from './pages/Order';
 
 const PrivateRoute = ({ children }) => {
   const user = useSelector((state) => state.auth.user);
@@ -44,22 +45,10 @@ function App() {
         <Route path="/product/:id" element={<ProductDetail />} />
 
         {/* private Routes */}
-        <Route
-          path="/login"
-          element={user?._id ? <Navigate to="/" /> : <Login />}
-        />
-        <Route
-          path="/register"
-          element={user?._id ? <Navigate to="/" /> : <SignUp />}
-        />
-        <Route
-          path="/cart"
-          element={
-            <PrivateRoute>
-              <Cart />
-            </PrivateRoute>
-          }
-        />
+        <Route path="/login" element={user?._id ? <Navigate to="/" /> : <Login />} />
+        <Route path="/register" element={user?._id ? <Navigate to="/" /> : <SignUp />} />
+        <Route path="/cart" element={ <PrivateRoute> <Cart /> </PrivateRoute> }/>
+        <Route path="/orders" element={ <PrivateRoute> <Order /> </PrivateRoute> }/>
       </Routes>
     </React.Fragment>
   );
